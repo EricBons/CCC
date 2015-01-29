@@ -1,0 +1,10 @@
+/* tables */
+.logo {
+	background-image:url("/Images/Stout_S.jpg");
+    background-repeat:no-repeat;
+    background-size:40px 37px;
+    height:35px;
+    width:36px;
+    display:inline-block;
+    vertical-align:bottom;
+}

@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CCCDomainContext.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="ActivityName" />
+          </Key>
+          <Property Name="ActivityName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Active" Type="bool" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="256" />
+          <Property Name="isNumber" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="FName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="LName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Admin" Type="bool" Nullable="false" />
+          <Property Name="Passwd" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PersonActivity">
+          <Key>
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="ActivityName" />
+            <PropertyRef Name="DayOfActivity" />
+          </Key>
+          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ActivityName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="DayOfActivity" Type="date" Nullable="false" />
+          <Property Name="PAdescription" Type="varchar" MaxLength="256" />
+          <Property Name="isNumber" Type="bool" Nullable="false" />
+          <Property Name="PAnumber" Type="double" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="RouteName" />
+          </Key>
+          <Property Name="RouteName" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Distance" Type="float" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Running">
+          <Key>
+            <PropertyRef Name="DayOfRunning" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="DayOfRunning" Type="date" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="RouteName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Miles" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="ActivityName">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonActivity" Type="Self.PersonActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="ActivityName" />
+            </Principal>
+            <Dependent Role="PersonActivity">
+              <PropertyRef Name="ActivityName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Email">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonActivity" Type="Self.PersonActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="PersonActivity">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Running_ibfk_1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Running" Type="Self.Running" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Running">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Running_ibfk_2">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Running" Type="Self.Running" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteName" />
+            </Principal>
+            <Dependent Role="Running">
+              <PropertyRef Name="RouteName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CCCDomainContextStoreContainer">
+          <EntitySet Name="Activities" EntityType="Self.Activities" Schema="CCC" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="CCC" store:Type="Tables" />
+          <EntitySet Name="PersonActivity" EntityType="Self.PersonActivity" Schema="CCC" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="CCC" store:Type="Tables" />
+          <EntitySet Name="Running" EntityType="Self.Running" Schema="CCC" store:Type="Tables" />
+          <AssociationSet Name="ActivityName" Association="Self.ActivityName">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="PersonActivity" EntitySet="PersonActivity" />
+          </AssociationSet>
+          <AssociationSet Name="Email" Association="Self.Email">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="PersonActivity" EntitySet="PersonActivity" />
+          </AssociationSet>
+          <AssociationSet Name="Running_ibfk_1" Association="Self.Running_ibfk_1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Running" EntitySet="Running" />
+          </AssociationSet>
+          <AssociationSet Name="Running_ibfk_2" Association="Self.Running_ibfk_2">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Running" EntitySet="Running" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CCCDomainContext" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityName" />
+          </Key>
+          <Property Name="ActivityName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PersonActivities" Relationship="Self.ActivityName" FromRole="Activities" ToRole="PersonActivity" />
+          <Property Name="isNumber" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="FName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
+          <Property Name="Passwd" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PersonActivities" Relationship="Self.Email" FromRole="Person" ToRole="PersonActivity" />
+          <NavigationProperty Name="Runnings" Relationship="Self.Running_ibfk_1" FromRole="Person" ToRole="Running" />
+        </EntityType>
+        <EntityType Name="PersonActivity">
+          <Key>
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="ActivityName" />
+            <PropertyRef Name="DayOfActivity" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActivityName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DayOfActivity" Type="DateTime" Nullable="false" />
+          <Property Name="PAdescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Activity" Relationship="Self.ActivityName" FromRole="PersonActivity" ToRole="Activities" />
+          <NavigationProperty Name="Person" Relationship="Self.Email" FromRole="PersonActivity" ToRole="Person" />
+          <Property Name="isNumber" Type="Boolean" Nullable="false" />
+          <Property Name="PAnumber" Type="Double" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="RouteName" />
+          </Key>
+          <Property Name="RouteName" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Distance" Type="Single" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Runnings" Relationship="Self.Running_ibfk_2" FromRole="Route" ToRole="Running" />
+        </EntityType>
+        <EntityType Name="Running">
+          <Key>
+            <PropertyRef Name="DayOfRunning" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="DayOfRunning" Type="DateTime" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RouteName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Miles" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.Running_ibfk_1" FromRole="Running" ToRole="Person" />
+          <NavigationProperty Name="Route" Relationship="Self.Running_ibfk_2" FromRole="Running" ToRole="Route" />
+        </EntityType>
+        <Association Name="ActivityName">
+          <End Role="Activities" Type="Self.Activity" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonActivity" Type="Self.PersonActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="ActivityName" />
+            </Principal>
+            <Dependent Role="PersonActivity">
+              <PropertyRef Name="ActivityName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Email">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonActivity" Type="Self.PersonActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="PersonActivity">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Running_ibfk_1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Running" Type="Self.Running" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Running">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Running_ibfk_2">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Running" Type="Self.Running" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteName" />
+            </Principal>
+            <Dependent Role="Running">
+              <PropertyRef Name="RouteName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DomainContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="Self.Activity" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="PersonActivities" EntityType="Self.PersonActivity" />
+          <EntitySet Name="Routes" EntityType="Self.Route" />
+          <EntitySet Name="Running" EntityType="Self.Running" />
+          <AssociationSet Name="ActivityName" Association="Self.ActivityName">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="PersonActivity" EntitySet="PersonActivities" />
+          </AssociationSet>
+          <AssociationSet Name="Email" Association="Self.Email">
+            <End Role="Person" EntitySet="People" />
+            <End Role="PersonActivity" EntitySet="PersonActivities" />
+          </AssociationSet>
+          <AssociationSet Name="Running_ibfk_1" Association="Self.Running_ibfk_1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Running" EntitySet="Running" />
+          </AssociationSet>
+          <AssociationSet Name="Running_ibfk_2" Association="Self.Running_ibfk_2">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="Running" EntitySet="Running" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CCCDomainContextStoreContainer" CdmEntityContainer="DomainContext">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="CCCDomainContext.Activity">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="isNumber" ColumnName="isNumber" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="CCCDomainContext.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="Passwd" ColumnName="Passwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonActivities">
+            <EntityTypeMapping TypeName="CCCDomainContext.PersonActivity">
+              <MappingFragment StoreEntitySet="PersonActivity">
+                <ScalarProperty Name="PAnumber" ColumnName="PAnumber" />
+                <ScalarProperty Name="isNumber" ColumnName="isNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="DayOfActivity" ColumnName="DayOfActivity" />
+                <ScalarProperty Name="PAdescription" ColumnName="PAdescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="CCCDomainContext.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="RouteName" ColumnName="RouteName" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Running">
+            <EntityTypeMapping TypeName="CCCDomainContext.Running">
+              <MappingFragment StoreEntitySet="Running">
+                <ScalarProperty Name="DayOfRunning" ColumnName="DayOfRunning" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RouteName" ColumnName="RouteName" />
+                <ScalarProperty Name="Miles" ColumnName="Miles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

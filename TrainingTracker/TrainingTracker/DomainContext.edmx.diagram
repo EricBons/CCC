@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="97c1ec045a9946ba9097906415a9a0ac" Name="Diagram1">
+        <EntityTypeShape EntityType="CCCDomainContext.Activity" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCCDomainContext.Person" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCCDomainContext.PersonActivity" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCCDomainContext.Route" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCCDomainContext.Running" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CCCDomainContext.ActivityName" ManuallyRouted="false" />
+        <AssociationConnector Association="CCCDomainContext.Email" ManuallyRouted="false" />
+        <AssociationConnector Association="CCCDomainContext.Running_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="CCCDomainContext.Running_ibfk_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

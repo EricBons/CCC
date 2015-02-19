@@ -37,7 +37,7 @@ Public Class FormsController
             If pair IsNot Nothing Then
                 If (pair.Activity.isNumber) Then
                     temp = New ActivityModel With {.ActivityName = x.ActivityName, .CheckboxOnly = If(x.Description.Equals("CHECKBOX"), True, False),
-                                               .Description = x.Description, .IsNumber = x.isNumber, .NumericValue = Double.Parse(pair.PAdescription)}
+                                               .Description = x.Description, .IsNumber = x.isNumber, .NumericValue = Double.Parse(pair.PAnumber)}
                 ElseIf pair.Activity.Description = "CHECKBOX" Then
                     temp = New ActivityModel With {.ActivityName = x.ActivityName, .CheckboxOnly = True,
                                                .Description = x.Description, .IsNumber = x.isNumber, .CheckBoxValue = True}
@@ -70,19 +70,26 @@ Public Class FormsController
                         db.SaveChanges()
                     End If
                 Else
-                    Dim newActivity = db.PersonActivities.Create()
-                    newActivity.ActivityName = x.ActivityName
-                    newActivity.DayOfActivity = model.Day
-                    newActivity.Email = current_user.Email
-                    newActivity.isNumber = False
-                    newActivity.PAdescription = "CHECKBOX"
-                    db.PersonActivities.Add(newActivity)
-                    db.SaveChanges()
+                    If x.CheckBoxValue = True Then
+                        Dim newActivity = db.PersonActivities.Create()
+                        newActivity.ActivityName = x.ActivityName
+                        newActivity.DayOfActivity = model.Day
+                        newActivity.Email = current_user.Email
+                        newActivity.isNumber = False
+                        newActivity.PAdescription = "CHECKBOX"
+                        db.PersonActivities.Add(newActivity)
+                        db.SaveChanges()
+                    End If
                 End If
-            ElseIf x.Value IsNot Nothing Then 'will it come back an empty string or null? if empty this is perfect
+            ElseIf x.Value IsNot Nothing OrElse x.NumericValue = 0 Then 'will it come back an empty string or null? if empty this is perfect
                 If existingData IsNot Nothing Then
-                    existingData.PAdescription = x.Value
-                    db.SaveChanges()
+                    If x.Value IsNot Nothing Then
+                        existingData.PAdescription = x.Value
+                        db.SaveChanges()
+                    Else
+                        db.PersonActivities.Remove(existingData)
+                        db.SaveChanges()
+                    End If
                 Else
                     Dim newActivity = db.PersonActivities.Create()
                     newActivity.ActivityName = x.ActivityName

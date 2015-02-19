@@ -14,10 +14,14 @@ End Code
         @Model.ErrorMessage
     </span>
 End If
+@<span>Date</span>@<br/>
+@Html.TextBoxFor(Function(x) x.Day, New With {.readOnly = "readOnly",.class="datepicker datefield",.id="dateOfTraining",.Value=Model.Day.ToShortDateString})
 @For Each activity In Model.ActivityValues
     @<div>
         <span>@activity.ActivityName</span><br/>
+            @Html.TextAreaFor(Function(x) x.ActivityValues.Item(counter).ActivityName, New With {.style = "display:none;",.readOnly="readOnly"})
         @If activity.CheckboxOnly Then
+                @Html.CheckBoxFor(Function(x) x.ActivityValues.Item(counter).CheckboxOnly, New With {.style = "display:none;", .readOnly = "readOnly"})
                 @Html.CheckBoxFor(Function(x) x.ActivityValues.Item(counter).CheckBoxValue)
         ElseIf activity.IsNumber Then
             @<span>@activity.Description</span>@<br/>
@@ -39,10 +43,25 @@ Next
 @<input type="submit" value="Submit" />
 End Using
 <script>
-    //$("#RunningValue_Route").selectedIndex = 0;
-    //$("#RunningValue_Route").val($("#RunningValue_Route option:first").val());
-    $("#RouteDistance").val($("#RunningValue_Route").val());
-    $("#RunningRouteName").val($("#RunningValue_Route option:selected").text());
+    $(function () { // will trigger when the document is ready
+        $('.datepicker').datepicker(); //Initialise any date pickers
+    });
+    $("#dateOfTraining").change(function () {
+        window.location.href = "/Forms/AtheleteLog?selectedDate=" + $("#dateOfTraining").val();
+    });
+    $("#RouteDistance").val(
+        @If Model.RunningValue.Distance <>-1 Then
+            @Model.RunningValue.Distance
+        Else
+            @Html.Raw("$('#RunningValue_Route').val()")
+        End If
+        );
+    $('#RunningValue_Route option').each(function () {
+        if ($(this).text() == "@Model.RunningValue.Route") {
+            $(this).attr('selected', 'selected');
+            $('#RunningRouteName').val($('#RunningValue_Route option:selected').text());
+        }
+    });
     $("#RunningValue_Route").change(function () {
         $("#RouteDistance").val($("#RunningValue_Route").val());
         $("#RunningRouteName").val($("#RunningValue_Route option:selected").text());

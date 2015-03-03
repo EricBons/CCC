@@ -227,6 +227,7 @@
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Controllers\FormsController.vb" />
+    <Compile Include="Dictionary.vb" />
     <Compile Include="DomainContext.Context.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -248,9 +249,13 @@
     </Compile>
     <Compile Include="Models\ActivityModel.vb" />
     <Compile Include="Models\AtheleteLogModel.vb" />
+    <Compile Include="Models\Shared\TableSorterModel.vb" />
+    <Compile Include="SupportClasses\TableProvider.vb" />
+    <Compile Include="SupportClasses\TableSorter\Column.vb" />
     <Compile Include="Models\LoginModel.vb" />
     <Compile Include="Models\ManageModel.vb" />
     <Compile Include="Models\RegisterModel.vb" />
+    <Compile Include="SupportClasses\TableSorter\Row.vb" />
     <Compile Include="Models\RunningModel.vb" />
     <Compile Include="Models\ValidationBase.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -346,6 +351,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\CS448.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>

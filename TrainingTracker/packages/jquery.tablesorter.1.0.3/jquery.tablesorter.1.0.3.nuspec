@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jquery.tablesorter</id>
+    <version>1.0.3</version>
+    <title />
+    <authors>chenxizhang</authors>
+    <owners>chenxizhang</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is jquery table sorter library. You can find details at http://tablesorter.com/docs/</description>
+    <dependencies>
+      <dependency id="JQuery" />
+    </dependencies>
+  </metadata>
+</package>

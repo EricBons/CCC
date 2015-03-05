@@ -5,7 +5,9 @@ Public Class BundleConfig
     ' For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
     Public Shared Sub RegisterBundles(ByVal bundles As BundleCollection)
         bundles.Add(New ScriptBundle("~/bundles/jquery").Include(
-                   "~/Scripts/jquery-{version}.js"))
+                   "~/Scripts/jquery-{version}.js",
+                   "~/Scripts/jquery.tablesorter.js",
+                   "~/Scripts/jquery.tablesorter.pager.js"))
 
         bundles.Add(New ScriptBundle("~/bundles/jqueryui").Include(
                     "~/Scripts/jquery-ui-{version}.js"))
@@ -19,7 +21,7 @@ Public Class BundleConfig
         bundles.Add(New ScriptBundle("~/bundles/modernizr").Include(
                     "~/Scripts/modernizr-*"))
 
-        bundles.Add(New StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Scripts/CSS/site.css"))
+        bundles.Add(New StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Scripts/CSS/site.css", "~/Scripts/CSS/style.css"))
 
         bundles.Add(New StyleBundle("~/Content/themes/base/css").Include(
                     "~/Content/themes/base/jquery.ui.core.css",

@@ -53,7 +53,7 @@
           <Property Name="DayOfRunning" Type="date" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="RouteName" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Miles" Type="int" Nullable="false" />
+          <Property Name="Miles" Type="double" Nullable="false" />
         </EntityType>
         <Association Name="ActivityName">
           <End Role="Activities" Type="Self.Activities" Multiplicity="1">

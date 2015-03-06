@@ -178,9 +178,9 @@
     <Content Include="pager\next.png" />
     <Content Include="pager\pager.css" />
     <Content Include="pager\prev.png" />
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.3.js" />
     <Content Include="Scripts\jquery-ui-1.11.3.min.js" />
     <Content Include="Scripts\jquery.tablesorter.min.js" />
@@ -193,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scripts\jquery-2.1.3.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrainingTracker\TrainingTracker.vbproj">

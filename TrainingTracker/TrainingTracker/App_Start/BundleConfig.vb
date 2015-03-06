@@ -7,7 +7,8 @@ Public Class BundleConfig
         bundles.Add(New ScriptBundle("~/bundles/jquery").Include(
                    "~/Scripts/jquery-{version}.js",
                    "~/Scripts/jquery.tablesorter.js",
-                   "~/Scripts/jquery.tablesorter.pager.js"))
+                   "~/Scripts/jquery.tablesorter.pager.js",
+                   "~/Scripts/jquery.tablesorter.widgets.js"))
 
         bundles.Add(New ScriptBundle("~/bundles/jqueryui").Include(
                     "~/Scripts/jquery-ui-{version}.js"))

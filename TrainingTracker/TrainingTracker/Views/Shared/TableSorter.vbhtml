@@ -1,6 +1,6 @@
 ﻿@ModelType TrainingTracker.TableSorterModel
 
-<table id="SortableTable_@Model.id" class="tablesorter">
+<table id="SortableTable_@Model.id" class="tablesorter-blue">
     <thead>
         <tr>
             @For Each header In Model.columns
@@ -23,8 +23,10 @@
     $(document).ready(function () {
         $("#SortableTable_@Model.id").tablesorter({
             sortList: [[0, 0]],
-            widgets: ["zebra", "filter"],
-            widgetOptions: {
+            cancelSelection: true,
+            ignoreCase: true,
+            widgets: ["zebra","filter"],
+            widgetOptions : {
                 filter_columnFilters: true
             }
         });

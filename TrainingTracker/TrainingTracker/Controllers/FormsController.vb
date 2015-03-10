@@ -91,30 +91,32 @@ Public Class FormsController
                         db.SaveChanges()
                     End If
                 Else
-                    Dim newActivity = db.PersonActivities.Create()
-                    newActivity.ActivityName = x.ActivityName
-                    newActivity.DayOfActivity = model.Day
-                    newActivity.Email = current_user.Email
-                    newActivity.isNumber = False
-                    newActivity.PAdescription = x.Value
-                    db.PersonActivities.Add(newActivity)
-                    db.SaveChanges()
+                    If x.Value IsNot Nothing Then
+                        Dim newActivity = db.PersonActivities.Create()
+                        newActivity.ActivityName = x.ActivityName
+                        newActivity.DayOfActivity = model.Day
+                        newActivity.Email = current_user.Email
+                        newActivity.isNumber = False
+                        newActivity.PAdescription = x.Value
+                        db.PersonActivities.Add(newActivity)
+                        db.SaveChanges()
+                    End If
                 End If
             ElseIf Not (x.NumericValue = 0) Then
-                If existingData IsNot Nothing Then
-                    existingData.PAnumber = x.NumericValue
-                    db.SaveChanges()
-                Else
-                    Dim newActivity = db.PersonActivities.Create()
-                    newActivity.ActivityName = x.ActivityName
-                    newActivity.DayOfActivity = model.Day
-                    newActivity.Email = current_user.Email
-                    newActivity.isNumber = True
-                    newActivity.PAdescription = "0"
-                    newActivity.PAnumber = x.NumericValue
-                    db.PersonActivities.Add(newActivity)
-                    db.SaveChanges()
-                End If
+                    If existingData IsNot Nothing Then
+                        existingData.PAnumber = x.NumericValue
+                        db.SaveChanges()
+                    Else
+                        Dim newActivity = db.PersonActivities.Create()
+                        newActivity.ActivityName = x.ActivityName
+                        newActivity.DayOfActivity = model.Day
+                        newActivity.Email = current_user.Email
+                        newActivity.isNumber = True
+                        newActivity.PAdescription = "0"
+                        newActivity.PAnumber = x.NumericValue
+                        db.PersonActivities.Add(newActivity)
+                        db.SaveChanges()
+                    End If
             End If
         Next
         If model.RunningValue.Distance <> -1 Then

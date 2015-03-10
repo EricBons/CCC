@@ -45,6 +45,9 @@ End Using
 <script>
     $(function () { // will trigger when the document is ready
         $('.datepicker').datepicker(); //Initialise any date pickers
+        @If String.IsNullOrWhiteSpace(Model.RunningValue.Route) Then
+            @Html.Raw("$('#RunningRouteName').val($('#RunningValue_Route option:selected').text());")
+        End If
     });
     $("#dateOfTraining").change(function () {
         window.location.href = "/Forms/AtheleteLog?selectedDate=" + $("#dateOfTraining").val();
@@ -56,7 +59,7 @@ End Using
             @Html.Raw("$('#RunningValue_Route').val()")
         End If
         );
-    $('#RunningValue_Route option').each(function () {
+    $('#RunningValue_Route option').each(function () {        
         if ($(this).text() == "@Model.RunningValue.Route") {
             $(this).attr('selected', 'selected');
             $('#RunningRouteName').val($('#RunningValue_Route option:selected').text());

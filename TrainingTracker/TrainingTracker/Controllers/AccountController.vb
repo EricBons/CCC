@@ -6,6 +6,7 @@ Imports DotNetOpenAuth.AspNet
 Imports Microsoft.Web.WebPages.OAuth
 Imports WebMatrix.WebData
 Imports System.Data.Entity
+Imports System.Web.Helpers
 
 <Authorize()> _
 Public Class AccountController
@@ -65,10 +66,12 @@ Public Class AccountController
         Try
             If ModelState.IsValid AndAlso user Is Nothing Then 'add code to check an exact email does not exist already
                 Dim newUser = db.People.Create()
+                Dim salt = "Green Eggs and Ham"
                 newUser.FName = model.FName
                 newUser.LName = model.LName
                 newUser.Email = model.Email
-                newUser.Passwd = model.Password
+                newUser.Passwd = Crypto.SHA256(model.Password + salt).ToString()
+                'newUser.Passwd = model.Password
                 db.People.Add(newUser)
                 db.SaveChanges()
                 Return RedirectToAction("Index", "Home")
@@ -98,13 +101,15 @@ Public Class AccountController
             String.IsNullOrWhiteSpace(model.Email) OrElse String.IsNullOrWhiteSpace(model.FName) OrElse
             String.IsNullOrWhiteSpace(model.LName)) Then
             Dim user = db.People.Where(Function(x) x.Email = model.Email).FirstOrDefault()
+            Dim salt = "Green Eggs and Ham"
+            model.OldPassword = Crypto.SHA256(model.OldPassword + salt).ToString()
             If user Is Nothing OrElse (user.Passwd = model.OldPassword) Then
                 Dim currentAcct = currentUser()
                 currentAcct.Email = model.Email
                 currentAcct.FName = model.FName
                 currentAcct.LName = model.LName
                 If model.ChangePassword Then
-                    currentAcct.Passwd = model.Password
+                    currentAcct.Passwd = Crypto.SHA256(model.Password + salt).ToString()
                 End If
                 db.SaveChanges()
                 FormsAuthentication.SignOut()
@@ -123,6 +128,8 @@ Public Class AccountController
 
     Public Function isValid(email As String, password As String) As Boolean
         Dim validity As Boolean = False
+        Dim salt = "Green Eggs and Ham"
+        password = Crypto.SHA256(password + salt).ToString()
         Dim user = db.People.FirstOrDefault(Function(x) x.Email = email And x.Passwd = password)
         If user IsNot Nothing Then
             validity = True

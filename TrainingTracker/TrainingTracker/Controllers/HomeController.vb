@@ -19,6 +19,7 @@
         Return View()
     End Function
 
+    <Authorize()> _
     Function CareerOverview() As ActionResult
         Dim provider = New TableProvider(db)
         Dim model = provider.careerTotalsTable(currentUser())

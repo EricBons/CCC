@@ -19,21 +19,33 @@
             Dim people = db.People.ToList()
             For Each person In people
                 Dim row = New Row With {.values = New List(Of String) From {person.FName, person.LName, person.Email}}
-                Dim totalXT As Double
-                db.PersonActivities.Where(Function(x) x.Email = person.Email AndAlso x.ActivityName = "XTraining").ToList().ForEach(Function(y) totalXT = y.PAnumber + totalXT)
+                Dim totalXT As Double = 0
+                Dim crossTraining = db.PersonActivities.Where(Function(x) x.Email = person.Email AndAlso x.ActivityName = "XTraining").ToList()
+                For Each xt In crossTraining
+                    totalXT = totalXT + xt.PAnumber
+                Next
                 row.values.Add(totalXT.ToString)
-                Dim totalDistance As Double
-                db.Running.Where(Function(x) x.Email = person.Email).ToList().ForEach(Function(y) totalDistance = y.Miles + totalDistance)
+                Dim totalDistance As Double = 0
+                Dim running = db.Running.Where(Function(x) x.Email = person.Email).ToList()
+                For Each run In running
+                    totalDistance = totalDistance + run.Miles
+                Next
                 row.values.Add(totalDistance.ToString)
                 table.rows.Add(row)
             Next
         Else
             Dim row = New Row With {.values = New List(Of String) From {currentUser.FName, currentUser.LName, currentUser.Email}}
-            Dim totalXT As Double
-            db.PersonActivities.Where(Function(x) x.Email = currentUser.Email AndAlso x.ActivityName = "XTraining").ToList.ForEach(Function(x) totalXT = x.PAnumber + totalXT)
+            Dim totalXT As Double = 0
+            Dim crossTraining = db.PersonActivities.Where(Function(x) x.Email = currentUser.Email AndAlso x.ActivityName = "XTraining").ToList
+            For Each xt In crossTraining
+                totalXT = totalXT + xt.PAnumber
+            Next
             row.values.Add(totalXT.ToString)
-            Dim totalDistance As Double
-            db.Running.Where(Function(x) x.Email = currentUser.Email).ToList.ForEach(Function(x) totalDistance = x.Miles + totalDistance)
+            Dim totalDistance As Double = 0
+            Dim running = db.Running.Where(Function(x) x.Email = currentUser.Email).ToList()
+            For Each run In running
+                totalDistance = totalDistance + run.Miles
+            Next
             row.values.Add(totalDistance.ToString)
             table.rows.Add(row)
         End If

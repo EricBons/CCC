@@ -250,6 +250,7 @@
     <Compile Include="Models\ActivityModel.vb" />
     <Compile Include="Models\AtheleteLogModel.vb" />
     <Compile Include="Models\Shared\TableSorterModel.vb" />
+    <Compile Include="Models\WeeklyOverviewModel.vb" />
     <Compile Include="SupportClasses\TableProvider.vb" />
     <Compile Include="SupportClasses\TableSorter\Column.vb" />
     <Compile Include="Models\LoginModel.vb" />
@@ -385,6 +386,7 @@
     <Content Include="Views\Forms\AtheleteLog.vbhtml" />
     <Content Include="Views\Shared\TableSorter.vbhtml" />
     <Content Include="Views\Home\CareerTotals.vbhtml" />
+    <Content Include="Views\Home\WeeklyTotals.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

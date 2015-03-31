@@ -18,7 +18,7 @@
         If currentUser.Admin Then
             Dim people = db.People.ToList()
             For Each person In people
-                Dim row = New Row With {.values = New List(Of String) From {person.FName, person.LName, "<a href='/Home/WeeklyOverview?targetEmail=" + person.Email + "'>" + person.Email + "</a>"}}
+                Dim row = New Row With {.values = New List(Of String) From {person.FName, person.LName, person.Email}}
                 Dim totalXT As Double = 0
                 Dim crossTraining = db.PersonActivities.Where(Function(x) x.Email = person.Email AndAlso x.ActivityName = "XTraining").ToList()
                 For Each xt In crossTraining
@@ -77,7 +77,7 @@
             }
         table.rows = New List(Of Row)
         For Each log In targetActivities
-            Dim row = New Row With {.values = New List(Of String) From {log.DayOfActivity.ToShortDateString, log.ActivityName}}
+            Dim row = New Row With {.values = New List(Of String) From {log.DayOfActivity.ToString, log.ActivityName}}
             If log.isNumber Then
                 row.values.Add(log.PAnumber)
             ElseIf log.Activity.Description = "CHECKBOX" Then
@@ -88,7 +88,7 @@
             table.rows.Add(row)
         Next
         'add final row for totals of XT and Running for the given targetActivities
-        Dim XTrow = New Row With {.values = New List(Of String) From {endDate.AddDays(-6).ToShortDateString + "-" + endDate.ToShortDateString, "Total XT"}}
+        Dim XTrow = New Row With {.values = New List(Of String) From {endDate.AddDays(-6).ToString + "-" + endDate.ToString, "Total XT"}}
         Dim crossTraining = targetActivities.Where(Function(x) x.ActivityName = "XTraining").ToList()
         Dim totalXT = Nothing 'sum total xt for the week
         For Each xt In crossTraining
@@ -98,11 +98,11 @@
         table.rows.Add(XTrow)
 
         For Each run In targetRunning
-            Dim row = New Row With {.values = New List(Of String) From {run.DayOfRunning.ToShortDateString, "Route: " + run.RouteName, run.Miles}}
+            Dim row = New Row With {.values = New List(Of String) From {run.DayOfRunning, run.RouteName, run.Miles}}
             table.rows.Add(row)
         Next
 
-        Dim runningRow = New Row With {.values = New List(Of String) From {endDate.AddDays(-6).ToShortDateString + "-" + endDate.ToShortDateString, "Total Distance"}}
+        Dim runningRow = New Row With {.values = New List(Of String) From {endDate.AddDays(-6).ToString + "-" + endDate.ToString, "Total Distance"}}
         Dim totalDistance = Nothing 'sum total running for the week
         For Each run In targetRunning
             totalDistance = totalDistance + run.Miles

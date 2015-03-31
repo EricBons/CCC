@@ -26,6 +26,23 @@
         Return View("CareerTotals", model)
     End Function
 
+    <Authorize()> _
+    Function WeeklyOverview(Optional ByVal targetEmail As String = Nothing, Optional ByVal endDate As DateTime = Nothing) As ActionResult
+        Dim model As New WeeklyOverviewModel
+        If endDate = Nothing Then
+            endDate = System.DateTime.Today
+        End If
+        model.endDate = endDate
+        Dim target As Person = Nothing
+        If Not String.IsNullOrWhiteSpace(targetEmail) Then
+            target = db.People.Where(Function(x) x.Email = targetEmail).FirstOrDefault
+            model.email = target.Email
+        End If
+        Dim provider = New TableProvider(db)
+        model.table = provider.weeklyTotalsTable(currentUser(), endDate, target)
+        Return View("WeeklyTotals", model)
+    End Function
+
     Private Function currentUser() As Person
         Dim account As Person = Nothing
         Try

@@ -12,7 +12,7 @@
         @For Each row In Model.rows
             @<tr>
                 @For Each value In row.values
-                    @<td>@value</td>
+                    @<td>@Html.Raw(value)</td>
                 Next
             </tr>
         Next

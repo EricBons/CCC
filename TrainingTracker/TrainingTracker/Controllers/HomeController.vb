@@ -29,6 +29,10 @@
     <Authorize()> _
     Function WeeklyOverview(Optional ByVal targetEmail As String = Nothing, Optional ByVal endDate As DateTime = Nothing) As ActionResult
         Dim model As New WeeklyOverviewModel
+        Dim user = currentUser()
+        If user.Admin Then
+            model.displayFeedbackLink = True
+        End If
         If endDate = Nothing Then
             endDate = System.DateTime.Today
         End If
@@ -39,7 +43,8 @@
             model.email = target.Email
         End If
         Dim provider = New TableProvider(db)
-        model.table = provider.weeklyTotalsTable(currentUser(), endDate, target)
+        model.table = provider.weeklyTotalsTable(user, endDate, target)
+        model.plainTextTableInput = provider.plainTextTableString(model.table)
         Return View("WeeklyTotals", model)
     End Function
 

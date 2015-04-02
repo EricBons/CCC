@@ -52,6 +52,7 @@
         table.id = "CareerTotals"
         Return table
     End Function
+
     Public Function weeklyTotalsTable(ByVal currentUser As Person, ByVal endDate As DateTime, Optional ByVal target As Person = Nothing) As TableSorterModel
         Dim targetActivities As List(Of PersonActivity) = Nothing
         Dim targetRunning As List(Of Running) = Nothing
@@ -90,7 +91,7 @@
         'add final row for totals of XT and Running for the given targetActivities
         Dim XTrow = New Row With {.values = New List(Of String) From {endDate.AddDays(-6).ToShortDateString + "-" + endDate.ToShortDateString, "Total XT"}}
         Dim crossTraining = targetActivities.Where(Function(x) x.ActivityName = "XTraining").ToList()
-        Dim totalXT = Nothing 'sum total xt for the week
+        Dim totalXT As Double = Nothing 'sum total xt for the week
         For Each xt In crossTraining
             totalXT = totalXT + xt.PAnumber
         Next
@@ -103,7 +104,7 @@
         Next
 
         Dim runningRow = New Row With {.values = New List(Of String) From {endDate.AddDays(-6).ToShortDateString + "-" + endDate.ToShortDateString, "Total Distance"}}
-        Dim totalDistance = Nothing 'sum total running for the week
+        Dim totalDistance As Double = Nothing 'sum total running for the week
         For Each run In targetRunning
             totalDistance = totalDistance + run.Miles
         Next
@@ -111,5 +112,20 @@
         table.rows.Add(runningRow)
         table.id = "WeeklyTotals"
         Return table
+    End Function
+
+    Public Function plainTextTableString(ByVal table As TableSorterModel) As String
+        Dim text As String = ""
+        For Each col In table.columns
+            text = text + col.name + "\t"
+        Next
+        text = text + "\n"
+        For Each tuple In table.rows
+            For Each value In tuple.values
+                text = text + value + "\t"
+            Next
+            text = text + "\n"
+        Next
+        Return text
     End Function
 End Class

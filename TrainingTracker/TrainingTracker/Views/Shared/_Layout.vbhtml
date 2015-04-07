@@ -26,8 +26,9 @@
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Log Training", "AtheleteLog", "Forms")</li>
+                            <li>@Html.ActionLink("Career Overview", "CareerOverview", "Home")</li>
+                            <li>@Html.ActionLink("Weekly Overview", "WeeklyOverview", "Home")</li>
                         </ul>
                     </nav>
                 </div>
@@ -42,7 +43,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - Training Tracker</p>
+                    <p>&copy; @DateTime.Now.Year - Training Tracker -- @Html.ActionLink("About", "About", "Home") -- @Html.ActionLink("Contact", "Contact", "Home")</p>
                 </div>
                 <img src="~/Images/Stout.png" style="width: 100%;bottom: 0;left:0">
             </div>

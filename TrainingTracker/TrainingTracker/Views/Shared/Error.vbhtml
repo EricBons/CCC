@@ -5,6 +5,6 @@
 End Code
 
 <hgroup class="title">
-    <h1 class="error">Error.</h1>
-    <h2 class="error">An error occurred while processing your request.</h2>
+    <h1 class="error">Somthing went wrong with your request. Please try again.</h1><br />
+    <h2 class="error">If the problem persists, contact the developers @Html.ActionLink("here", "Contact", "Home").</h2>
 </hgroup>

@@ -7,6 +7,10 @@
         Return View()
     End Function
 
+    Function ErrorPage() As ActionResult
+        Return View("Error")
+    End Function
+
     Function About() As ActionResult
         ViewData("Message") = "Additional Info"
 

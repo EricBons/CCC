@@ -55,6 +55,35 @@ Public Class FormsController
         Return View(model)
     End Function
 
+    Function ActivityChange(ByVal ActName As String) As ActionResult
+        Dim current_user As Person = currentUser()
+        Dim model As New ActivityModel
+
+        Dim act = db.Activities.Where(Function(x) x.ActivityName = ActName).ToList()
+        For Each x In act
+            model.ActivityName.Equals(x.ActivityName)
+            model.Description.Equals(x.Description)
+            model.IsNumber.Equals(x.isNumber)
+            model.Active.Equals(x.Active)
+        Next
+        Return View(model)
+    End Function
+
+    Function RouteChange(ByVal RouName As String) As ActionResult
+        Dim current_user As Person = currentUser()
+        Dim model As New ActivityModel
+
+        Dim act = db.Activities.Where(Function(x) x.ActivityName = RouName).ToList()
+
+        For Each x In act
+            model.ActivityName.Equals(x.ActivityName)
+            model.Description.Equals(x.Description)
+            model.IsNumber.Equals(x.isNumber)
+            model.Active.Equals(x.Active)
+        Next
+        Return View(model)
+    End Function
+
     <HttpPost()> _
     Function AtheleteLog(model As AtheleteLogModel) As ActionResult
         Dim current_user As Person = currentUser()

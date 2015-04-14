@@ -123,20 +123,19 @@
             New Column With {.filterable = False, .sortable = True, .name = "Activity Name"},
             New Column With {.filterable = False, .sortable = True, .name = "Description"},
             New Column With {.filterable = False, .sortable = True, .name = "Number Value"},
-            New Column With {.filterable = False, .sortable = True, .name = "Edit"},
-            New Column With {.filterable = False, .sortable = True, .name = "Act"}
+            New Column With {.filterable = False, .sortable = True, .name = "Edit"}
             }
         table.rows = New List(Of Row)
         If currentUser.Admin Then
             Dim activities = db.Activities.ToList()
+            Dim act = ""
             For Each activity In activities
-                Dim row = New Row With {.values = New List(Of String) From {activity.Active, activity.ActivityName, activity.Description, activity.isNumber, "<a href='/Forms/ActivityChange?targetActivity=" + activity.ActivityName + "'>Edit</a>"}}
-                Dim act = "CheckBox(Honest)"
                 If activity.Active = True Then
-                    'row.values.Add(act)
+                    act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='True'>"
                 Else
-                    'row.values.Add(act)
+                    act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='False'>"
                 End If
+                Dim row = New Row With {.values = New List(Of String) From {act, activity.ActivityName, activity.Description, activity.isNumber, "<a href='/Forms/ActivityChange?targetActivity=" + activity.ActivityName + "'>Edit</a>"}}
                 table.rows.Add(row)
             Next
         End If
@@ -157,14 +156,14 @@
         table.rows = New List(Of Row)
         If currentUser.Admin Then
             Dim routes = db.Routes.ToList()
+            Dim act = ""
             For Each route In routes
-                Dim row = New Row With {.values = New List(Of String) From {route.IsActive, route.RouteName, route.Distance, "<a href='/Forms/ActivityChange?targetActivity=" + route.RouteName + "'>Edit</a>"}}
-                Dim act = "CheckBox(Honest)"
                 If route.IsActive = True Then
-                    row.values.Add(act)
+                    act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='True'>"
                 Else
-                    'row.values.Add(act)
+                    act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='False'>"
                 End If
+                Dim row = New Row With {.values = New List(Of String) From {act, route.RouteName, route.Distance, "<a href='/Forms/ActivityChange?targetActivity=" + route.RouteName + "'>Edit</a>"}}
                 table.rows.Add(row)
             Next
         End If

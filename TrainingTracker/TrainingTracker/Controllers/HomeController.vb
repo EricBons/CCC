@@ -32,7 +32,14 @@
 
     <Authorize()> _
     Function CoachEdit() As ActionResult
-        Return View("CoachEdit")
+        Dim user = currentUser()
+        If user.Admin Then
+            Return View("CoachEdit")
+        Else
+            Dim p = New StringBuilder
+            p.Append(<p>You are not authorized for this page</p>)
+            Return View(p)
+        End If
     End Function
 
     <Authorize()> _

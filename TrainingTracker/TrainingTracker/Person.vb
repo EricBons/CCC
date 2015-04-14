@@ -19,5 +19,6 @@ Partial Public Class Person
 
     Public Overridable Property PersonActivities As ICollection(Of PersonActivity) = New HashSet(Of PersonActivity)
     Public Overridable Property Runnings As ICollection(Of Running) = New HashSet(Of Running)
+    Public Overridable Property Feedbacks As ICollection(Of Feedback) = New HashSet(Of Feedback)
 
 End Class

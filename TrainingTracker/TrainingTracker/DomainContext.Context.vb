@@ -27,5 +27,6 @@ Partial Public Class DomainContext
     Public Property PersonActivities() As DbSet(Of PersonActivity)
     Public Property Routes() As DbSet(Of Route)
     Public Property Running() As DbSet(Of Running)
+    Public Property Feedbacks() As DbSet(Of Feedback)
 
 End Class

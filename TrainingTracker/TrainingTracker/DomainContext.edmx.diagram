@@ -14,6 +14,8 @@
         <AssociationConnector Association="CCCDomainContext.Email" ManuallyRouted="false" />
         <AssociationConnector Association="CCCDomainContext.Running_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="CCCDomainContext.Running_ibfk_2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CCCDomainContext.Feedback" Width="1.5" PointX="3" PointY="8" />
+        <AssociationConnector Association="CCCDomainContext.Athelete" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

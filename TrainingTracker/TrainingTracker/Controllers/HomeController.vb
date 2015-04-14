@@ -31,6 +31,25 @@
     End Function
 
     <Authorize()> _
+    Function CoachEdit() As ActionResult
+        Return View("CoachEdit")
+    End Function
+
+    <Authorize()> _
+    Function ActivityEdit() As ActionResult
+        Dim provider = New TableProvider(db)
+        Dim model = provider.coachActivitiesTable(currentUser())
+        Return View("ActivityEdit", model)
+    End Function
+
+    <Authorize()> _
+    Function RouteEdit() As ActionResult
+        Dim provider = New TableProvider(db)
+        Dim model = provider.coachRoutesTable(currentUser())
+        Return View("RouteEdit", model)
+    End Function
+
+    <Authorize()> _
     Function WeeklyOverview(Optional ByVal targetEmail As String = Nothing, Optional ByVal endDate As DateTime = Nothing) As ActionResult
         Dim model As New WeeklyOverviewModel
         Dim user = currentUser()

@@ -387,6 +387,10 @@
     <Content Include="Views\Shared\TableSorter.vbhtml" />
     <Content Include="Views\Home\CareerTotals.vbhtml" />
     <Content Include="Views\Home\WeeklyTotals.vbhtml" />
+    <Content Include="Views\Home\ActivityEdit.vbhtml" />
+    <Content Include="Views\Home\CoachEdit.vbhtml" />
+    <Content Include="Views\Home\RouteEdit.vbhtml" />
+    <Content Include="Views\Forms\ActivityChange.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

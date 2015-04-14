@@ -29,6 +29,7 @@
                             <li>@Html.ActionLink("Log Training", "AtheleteLog", "Forms")</li>
                             <li>@Html.ActionLink("Career Overview", "CareerOverview", "Home")</li>
                             <li>@Html.ActionLink("Weekly Overview", "WeeklyOverview", "Home")</li>
+                            <li>@Html.ActionLink("Coach Editable", "CoachEdit", "Home")</li>
                         </ul>
                     </nav>
                 </div>

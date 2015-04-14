@@ -114,6 +114,64 @@
         Return table
     End Function
 
+    Public Function coachActivitiesTable(ByVal currentUser As Person) As TableSorterModel
+        Dim table As New TableSorterModel
+        table.title = "coachActivities"
+        table.columns = New List(Of Column) From
+            {
+            New Column With {.filterable = False, .sortable = True, .name = "Active"},
+            New Column With {.filterable = False, .sortable = True, .name = "Activity Name"},
+            New Column With {.filterable = False, .sortable = True, .name = "Description"},
+            New Column With {.filterable = False, .sortable = True, .name = "Number Value"},
+            New Column With {.filterable = False, .sortable = True, .name = "Edit"},
+            New Column With {.filterable = False, .sortable = True, .name = "Act"}
+            }
+        table.rows = New List(Of Row)
+        If currentUser.Admin Then
+            Dim activities = db.Activities.ToList()
+            For Each activity In activities
+                Dim row = New Row With {.values = New List(Of String) From {activity.Active, activity.ActivityName, activity.Description, activity.isNumber, "<a href='/Forms/ActivityChange?targetActivity=" + activity.ActivityName + "'>Edit</a>"}}
+                Dim act = "CheckBox(Honest)"
+                If activity.Active = True Then
+                    'row.values.Add(act)
+                Else
+                    'row.values.Add(act)
+                End If
+                table.rows.Add(row)
+            Next
+        End If
+        table.id = "coachActivities"
+        Return table
+    End Function
+
+    Public Function coachRoutesTable(ByVal currentUser As Person) As TableSorterModel
+        Dim table As New TableSorterModel
+        table.title = "coachRoutes"
+        table.columns = New List(Of Column) From
+            {
+            New Column With {.filterable = False, .sortable = True, .name = "Active"},
+            New Column With {.filterable = False, .sortable = True, .name = "Route Name"},
+            New Column With {.filterable = False, .sortable = True, .name = "Distance"},
+            New Column With {.filterable = False, .sortable = True, .name = "Edit"}
+            }
+        table.rows = New List(Of Row)
+        If currentUser.Admin Then
+            Dim routes = db.Routes.ToList()
+            For Each route In routes
+                Dim row = New Row With {.values = New List(Of String) From {route.IsActive, route.RouteName, route.Distance, "<a href='/Forms/ActivityChange?targetActivity=" + route.RouteName + "'>Edit</a>"}}
+                Dim act = "CheckBox(Honest)"
+                If route.IsActive = True Then
+                    row.values.Add(act)
+                Else
+                    'row.values.Add(act)
+                End If
+                table.rows.Add(row)
+            Next
+        End If
+        table.id = "coachRoutes"
+        Return table
+    End Function
+
     Public Function plainTextTableString(ByVal table As TableSorterModel) As String
         Dim text As String = ""
         For Each col In table.columns

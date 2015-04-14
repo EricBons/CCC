@@ -25,5 +25,6 @@ End Code
         <li>@Html.ActionLink("Log Training", "AtheleteLog", "Forms")</li>
         <li>@Html.ActionLink("Career Overview", "CareerOverview", "Home")</li>
         <li>@Html.ActionLink("Weekly Overview", "WeeklyOverview", "Home")</li>
+        <li>@Html.ActionLink("Coach Edit", "CoachEdit", "Home")</li>
     </ul>
 </aside>

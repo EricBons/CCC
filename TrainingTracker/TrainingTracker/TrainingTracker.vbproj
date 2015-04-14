@@ -243,6 +243,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DomainContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Feedback.vb">
+      <DependentUpon>DomainContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>

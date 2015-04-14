@@ -14,6 +14,15 @@
           <Property Name="Description" Type="varchar" MaxLength="256" />
           <Property Name="isNumber" Type="bool" Nullable="false" />
         </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="Athelete" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="Feedback" Type="varchar" MaxLength="256" />
+          <Property Name="Athelete" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Email" />
@@ -22,7 +31,7 @@
           <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="LName" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Admin" Type="bool" Nullable="false" />
-          <Property Name="Passwd" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Passwd" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="PersonActivity">
           <Key>
@@ -69,6 +78,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Athelete">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="Athelete" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Email">
           <End Role="Person" Type="Self.Person" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -109,6 +132,7 @@
         </Association>
         <EntityContainer Name="CCCDomainContextStoreContainer">
           <EntitySet Name="Activities" EntityType="Self.Activities" Schema="CCC" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="CCC" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="CCC" store:Type="Tables" />
           <EntitySet Name="PersonActivity" EntityType="Self.PersonActivity" Schema="CCC" store:Type="Tables" />
           <EntitySet Name="Route" EntityType="Self.Route" Schema="CCC" store:Type="Tables" />
@@ -116,6 +140,10 @@
           <AssociationSet Name="ActivityName" Association="Self.ActivityName">
             <End Role="Activities" EntitySet="Activities" />
             <End Role="PersonActivity" EntitySet="PersonActivity" />
+          </AssociationSet>
+          <AssociationSet Name="Athelete" Association="Self.Athelete">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Feedback" EntitySet="Feedback" />
           </AssociationSet>
           <AssociationSet Name="Email" Association="Self.Email">
             <End Role="Person" EntitySet="Person" />
@@ -152,9 +180,10 @@
           <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
-          <Property Name="Passwd" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passwd" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="PersonActivities" Relationship="Self.Email" FromRole="Person" ToRole="PersonActivity" />
           <NavigationProperty Name="Runnings" Relationship="Self.Running_ibfk_1" FromRole="Person" ToRole="Running" />
+          <NavigationProperty Name="Feedbacks" Relationship="CCCDomainContext.Athelete" FromRole="Person" ToRole="Feedback" />
         </EntityType>
         <EntityType Name="PersonActivity">
           <Key>
@@ -266,7 +295,36 @@
             <End Role="Route" EntitySet="Routes" />
             <End Role="Running" EntitySet="Running" />
           </AssociationSet>
+          <EntitySet Name="Feedbacks" EntityType="CCCDomainContext.Feedback" />
+          <AssociationSet Name="Athelete" Association="CCCDomainContext.Athelete">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="Athelete" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="Feedback1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Athelete" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="CCCDomainContext.Athelete" FromRole="Feedback" ToRole="Person" />
+        </EntityType>
+        <Association Name="Athelete">
+          <End Type="CCCDomainContext.Person" Role="Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CCCDomainContext.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="Athelete" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -322,6 +380,15 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="RouteName" ColumnName="RouteName" />
                 <ScalarProperty Name="Miles" ColumnName="Miles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="CCCDomainContext.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Athelete" ColumnName="Athelete" />
+                <ScalarProperty Name="Feedback1" ColumnName="Feedback" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

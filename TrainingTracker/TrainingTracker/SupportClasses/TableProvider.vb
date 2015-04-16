@@ -133,7 +133,7 @@
                 If activity.Active = True Then
                     act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='True'>"
                 Else
-                    act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='False'>"
+                    act = "<input type='checkbox' name='ActAct' id='ActAct'>"
                 End If
                 Dim row = New Row With {.values = New List(Of String) From {act, activity.ActivityName, activity.Description, activity.isNumber, "<a href='/Forms/ActivityChange?targetActivity=" + activity.ActivityName + "'>Edit</a>"}}
                 table.rows.Add(row)
@@ -161,9 +161,9 @@
                 If route.IsActive = True Then
                     act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='True'>"
                 Else
-                    act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='False'>"
+                    act = "<input type='checkbox' name='RouAct' id='RouAct'>"
                 End If
-                Dim row = New Row With {.values = New List(Of String) From {act, route.RouteName, route.Distance, "<a href='/Forms/ActivityChange?targetActivity=" + route.RouteName + "'>Edit</a>"}}
+                Dim row = New Row With {.values = New List(Of String) From {act, route.RouteName, route.Distance, "<a href='/Forms/RouteChange?targetRoute=" + route.RouteName + "'>Edit</a>"}}
                 table.rows.Add(row)
             Next
         End If

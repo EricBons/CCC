@@ -55,31 +55,40 @@ Public Class FormsController
         Return View(model)
     End Function
 
-    Function ActivityChange(ByVal ActName As String) As ActionResult
+    Function ActivityChange(Optional ByVal ActNam As String = Nothing) As ActionResult
         Dim current_user As Person = currentUser()
-        Dim model As New ActivityModel
+        Dim model As New CoachEditModel
+        ActNam = "AM Comments"
+        Dim activities = db.Activities.Where(Function(x) x.ActivityName = ActNam).ToList()
+        For Each x In activities
+            Dim pair = activities.FirstOrDefault(Function(y) y.ActivityName = x.ActivityName)
+            Dim temp = Nothing
+            If pair IsNot Nothing Then
+                temp = New ActivityModel With {.ActivityName = x.ActivityName, .Description = x.Description, .IsNumber = x.isNumber, .Active = x.Active}
+            Else
+                temp = New ActivityModel With {.ActivityName = x.ActivityName, .Description = x.Description, .IsNumber = False, .Active = True}
+            End If
 
-        Dim act = db.Activities.Where(Function(x) x.ActivityName = ActName).ToList()
-        For Each x In act
-            model.ActivityName.Equals(x.ActivityName)
-            model.Description.Equals(x.Description)
-            model.IsNumber.Equals(x.isNumber)
-            model.Active.Equals(x.Active)
+            model.ActivityValues.Add(temp)
         Next
         Return View(model)
     End Function
 
-    Function RouteChange(ByVal RouName As String) As ActionResult
+    Function RouteChange(ByVal RouNam As String) As ActionResult
         Dim current_user As Person = currentUser()
-        Dim model As New ActivityModel
+        Dim model As New CoachEditModel
+        RouNam = "3M Female"
+        Dim routes = db.Routes.Where(Function(x) x.RouteName = RouNam).ToList()
+        For Each x In routes
+            Dim pair = routes.FirstOrDefault(Function(y) y.RouteName = x.RouteName)
+            Dim temp = Nothing
+            If pair IsNot Nothing Then
+                temp = New RouteModel With {.RouteName = x.RouteName, .Distance = x.Distance, .IsActive = x.IsActive}
+            Else
+                temp = New RouteModel With {.RouteName = x.RouteName, .Distance = x.Distance, .IsActive = True}
+            End If
 
-        Dim act = db.Activities.Where(Function(x) x.ActivityName = RouName).ToList()
-
-        For Each x In act
-            model.ActivityName.Equals(x.ActivityName)
-            model.Description.Equals(x.Description)
-            model.IsNumber.Equals(x.isNumber)
-            model.Active.Equals(x.Active)
+            model.RouteValues.Add(temp)
         Next
         Return View(model)
     End Function

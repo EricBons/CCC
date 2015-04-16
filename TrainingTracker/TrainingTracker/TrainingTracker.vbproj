@@ -250,7 +250,9 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\RouteModel.vb" />
     <Compile Include="Models\ActivityModel.vb" />
+    <Compile Include="Models\CoachEditModel.vb" />
     <Compile Include="Models\AtheleteLogModel.vb" />
     <Compile Include="Models\Shared\TableSorterModel.vb" />
     <Compile Include="Models\WeeklyOverviewModel.vb" />
@@ -394,6 +396,7 @@
     <Content Include="Views\Home\CoachEdit.vbhtml" />
     <Content Include="Views\Home\RouteEdit.vbhtml" />
     <Content Include="Views\Forms\ActivityChange.vbhtml" />
+    <Content Include="Views\Forms\RouteChange.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

@@ -10,3 +10,8 @@ End Code
 <br />
 <br />
 @Html.Partial("TableSorter", Model)
+<br />
+<input type="submit" value="Submit" />
+<script>
+    
+</script>

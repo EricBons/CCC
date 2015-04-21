@@ -177,6 +177,27 @@ Public Class FormsController
         Return View(model)
     End Function
 
+    <HttpPost()> _
+    Function logFeedback(ByVal email As String, ByVal feedback As String, ByVal endDate As Date) As ActionResult
+        Dim emailFinal As String = email
+        If String.IsNullOrWhiteSpace(email) Then
+            emailFinal = currentUser().Email
+        End If
+        Dim existingFeedback = db.Feedbacks.Where(Function(y) y.EndDate = endDate AndAlso y.Athelete = emailFinal).FirstOrDefault
+        If existingFeedback IsNot Nothing Then
+            existingFeedback.Feedback1 = feedback
+            db.SaveChanges()
+        Else
+            Dim newFeedback = db.Feedbacks.Create
+            newFeedback.Feedback1 = feedback
+            newFeedback.Athelete = emailFinal
+            newFeedback.EndDate = endDate
+            db.Feedbacks.Add(newFeedback)
+            db.SaveChanges()
+        End If
+        Return RedirectToAction("WeeklyOverview", "Home", New With {.targetEmail = email, .endDate = endDate})
+    End Function
+
     Private Function currentUser() As Person
         Dim account As Person = Nothing
         Try

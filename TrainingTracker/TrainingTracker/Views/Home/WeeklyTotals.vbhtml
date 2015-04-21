@@ -10,13 +10,25 @@ End Code
 <h3>@Model.table.title</h3>
 <br />
 <span>End Date</span><br />
-@Html.TextBoxFor(Function(x) x.endDate, New With {.readOnly = "readOnly", .class = "datepicker datefield", .id = "dateOfTraining", .Value = Model.endDate.ToShortDateString})
+@Html.TextBoxFor(Function(x) x.endingDate, New With {.readOnly = "readOnly", .class = "datepicker datefield", .id = "dateOfTraining", .Value = Model.endingDate.ToShortDateString})
 
 @Html.Partial("TableSorter", Model.table)
 
 @If Model.displayFeedbackLink Then
-    @<br />
-    @<a href=# onclick="SendEmail()">Send Feeback For This Week</a>
+    @<div>
+    @Using (Html.BeginForm("logFeedback", "Forms", New With {.email = Model.email, .feedback = Model.feedback, .endDate = Model.endingDate}))
+        @<h3>Provide Feedback</h3>
+        @Html.TextAreaFor(Function(x) x.feedback)
+        @<br />
+        @<input type="submit" value="Submit" />
+    End Using
+        <br />
+        <a href=# onclick="SendEmail()">Send Feeback As Email For This Week</a>
+    </div>
+Else
+    @<p>
+        @Model.feedback
+    </p>
 End If
 
 
@@ -25,12 +37,12 @@ End If
         $('.datepicker').datepicker(); //Initialise any date pickers
     });
     $("#dateOfTraining").change(function () {
-        window.location.href = "/Home/WeeklyOverview?targetEmail=@Model.email" + "&endDate="+$("#dateOfTraining").val();
+        window.location.href = "/Home/WeeklyOverview?targetEmail=@Model.email" + "&endingDate="+$("#dateOfTraining").val();
     });
 
     function SendEmail() {
         outputTable = createTable("@Model.plainTextTableInput");
-        window.location.href = "mailto:@Model.email?subject=Training%20Feedback%20" + "@Model.endDate.ToShortDateString" + "&body=" + "The%20following%20is%20a%20table%20containing%20the%20training%20for%20the%20week%20commented%20on.%20To%20make%20it%20format%20correctly%20,%20change%20its%20font%20to%20Courier%20New.%0D%0A" + outputTable;
+        window.location.href = "mailto:@Model.email?subject=Training%20Feedback%20" + "@Model.endingDate.ToShortDateString" + "&body=" + "The%20following%20is%20a%20table%20containing%20the%20training%20for%20the%20week%20commented%20on.%20To%20make%20it%20format%20correctly%20,%20change%20its%20font%20to%20Courier%20New.%0D%0A" + outputTable;
     }
 
     /*http://www.sensefulsolutions.com/2010/10/format-text-as-table.html is the owner of the following js. It has been modified to remove various choices providing one static style of table and to allow passing of the initial string.*/

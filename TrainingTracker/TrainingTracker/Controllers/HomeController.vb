@@ -57,23 +57,38 @@
     End Function
 
     <Authorize()> _
-    Function WeeklyOverview(Optional ByVal targetEmail As String = Nothing, Optional ByVal endDate As DateTime = Nothing) As ActionResult
+    Function WeeklyOverview(Optional ByVal targetEmail As String = Nothing, Optional ByVal endingDate As DateTime = Nothing) As ActionResult
         Dim model As New WeeklyOverviewModel
         Dim user = currentUser()
         If user.Admin Then
             model.displayFeedbackLink = True
         End If
-        If endDate = Nothing Then
-            endDate = System.DateTime.Today
+        If endingDate = Nothing Then
+            endingDate = System.DateTime.Today
         End If
-        model.endDate = endDate
+        model.endingDate = endingDate
         Dim target As Person = Nothing
         If Not String.IsNullOrWhiteSpace(targetEmail) Then
             target = db.People.Where(Function(x) x.Email = targetEmail).FirstOrDefault
             model.email = target.Email
+        Else
+            model.email = currentUser().Email
         End If
+        Dim startDateString As String = endingDate.AddDays(-3).ToString("yyyy-MM-dd")
+        Dim endDateString As String = endingDate.AddDays(3).ToString("yyyy-MM-dd")
+        Dim difference As TimeSpan = New TimeSpan(8, 0, 0, 0, 0)
+        Dim possibleFeedback As List(Of Feedback) = db.Feedbacks.Where(Function(feedback) feedback.Athelete = model.email AndAlso startDateString <= feedback.EndDate AndAlso feedback.EndDate <= endDateString).ToList
+        For Each entry In possibleFeedback
+            If difference.Duration > (endingDate - entry.EndDate).Duration Then
+                difference = (endingDate - entry.EndDate)
+                model.feedback = entry.Feedback1
+                If difference.TotalDays = 0 Then
+                    Exit For
+                End If
+            End If
+        Next
         Dim provider = New TableProvider(db)
-        model.table = provider.weeklyTotalsTable(user, endDate, target)
+        model.table = provider.weeklyTotalsTable(user, endingDate, target)
         model.plainTextTableInput = provider.plainTextTableString(model.table)
         Return View("WeeklyTotals", model)
     End Function

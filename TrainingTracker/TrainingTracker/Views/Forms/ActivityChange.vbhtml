@@ -15,7 +15,7 @@ End Code
     </span>
 End If
     @<span>Activity Name</span>@<br />
-    @Html.TextBoxFor(Function(x) x.ActivityValues, New With {.readOnly = "readOnly", .class = "actNam", .id = "actNam", .Value = "AM Comments"})
+    @Html.TextBoxFor(Function(x) x.ActivityValues.First.ActivityName, New With {.readOnly = "readOnly", .class = "targetActivity", .id = "targetActivity"})
     @For Each activity In Model.ActivityValues
         @<br />@<br />
         @<span>Description (To create an activity that uses a checkbox entry style enter: CHECKBOX)</span>@<br />

@@ -15,7 +15,7 @@ End Code
     </span>
 End If
     @<span>Route Name</span>@<br />
-    @Html.TextBoxFor(Function(x) x.RouteValues, New With {.readOnly = "readOnly", .class = "rouNam", .id = "rouNam", .Value = "3M Female"})
+    @Html.TextBoxFor(Function(x) x.RouteValues.First.RouteName, New With {.readOnly = "readOnly", .class = "targetRoute", .id = "targetRoute"})
     @For Each route In Model.RouteValues
         @<br />@<br />
         @<span>Distance</span>@<br />
@@ -23,17 +23,11 @@ End If
         @<br />@<br />
         @<span>Is Active</span>@<br />
             @Html.CheckBoxFor(Function(x) x.RouteValues.Item(counter).CheckboxOnly, New With {.style = "display:none;", .readOnly = "readOnly"})
-            @Html.CheckBoxFor(Function(x) x.RouteValues.Item(counter).CheckBoxValue)
+            @Html.CheckBoxFor(Function(x) x.RouteValues.Item(counter).IsActive)
         @<br />@<br />
         counter = counter + 1
     Next
 
     @<input type="submit" value="Submit" />
 End Using
-<script>
-    $("#rouName").change(function () {
-        window.location.href = "/Forms/RouteChange?targetRoute=" + $("#rouNam").val();
-    });
-
-</script>
 

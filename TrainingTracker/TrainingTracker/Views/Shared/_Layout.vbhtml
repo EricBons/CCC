@@ -31,7 +31,7 @@
                             <li>@Html.ActionLink("Weekly Overview", "WeeklyOverview", "Home")</li>
                             <li>
                               @*  @If currentUser().Admin Then *@
-                                    @Html.ActionLink("Coach Editable", "CoachEdit", "Home")
+                                    @Html.ActionLink("Coach Edit", "CoachEdit", "Home")
                               @*  End If *@
                             </li>
                         </ul>

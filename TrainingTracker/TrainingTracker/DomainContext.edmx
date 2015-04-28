@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CCCDomainContext.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="CCCDomainContext.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Activities">
           <Key>
             <PropertyRef Name="ActivityName" />
@@ -51,7 +51,7 @@
             <PropertyRef Name="RouteName" />
           </Key>
           <Property Name="RouteName" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="Distance" Type="float" Nullable="false" />
+          <Property Name="Distance" Type="double" Nullable="false" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Running">
@@ -61,7 +61,7 @@
           </Key>
           <Property Name="DayOfRunning" Type="date" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="RouteName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="RouteName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Miles" Type="double" Nullable="false" />
         </EntityType>
         <Association Name="ActivityName">

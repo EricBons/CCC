@@ -384,6 +384,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Images\Stout.png" />
+    <Content Include="Images\Stout_S.png" />
     <Content Include="packages.config" />
     <Content Include="pager\first.png" />
     <Content Include="pager\last.png" />

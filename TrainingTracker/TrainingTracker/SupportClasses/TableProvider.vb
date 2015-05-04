@@ -129,6 +129,7 @@
         If currentUser.Admin Then
             Dim activities = db.Activities.ToList()
             Dim act = ""
+            table.rows.Add(New Row With {.values = New List(Of String) From {"", "", "", "", "<a href='/Forms/ActivityChange?targetActivity='>New Activity</a>"}})
             For Each activity In activities
                 If activity.Active = True Then
                     act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='True'>"
@@ -157,6 +158,7 @@
         If currentUser.Admin Then
             Dim routes = db.Routes.ToList()
             Dim act = ""
+            table.rows.Add(New Row With {.values = New List(Of String) From {"", "", "", "<a href='/Forms/RouteChange?targetRoute='>New Route</a>"}})
             For Each route In routes
                 If route.IsActive = True Then
                     act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='True'>"

@@ -7,4 +7,5 @@
     Public Property CheckboxOnly As Boolean
     Public Property CheckBoxValue As Boolean
     Public Property Description As String
+    Public Property IsNew As Boolean
 End Class

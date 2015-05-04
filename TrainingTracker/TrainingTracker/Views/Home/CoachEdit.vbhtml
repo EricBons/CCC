@@ -4,7 +4,7 @@
 End Code
 
 <h2>CoachEdit</h2>
-
+ 
 <p>
     <ul>
         <li>@Html.ActionLink("Activity Edit", "ActivityEdit", "Home")</li>

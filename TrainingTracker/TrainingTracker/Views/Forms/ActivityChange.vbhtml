@@ -14,9 +14,10 @@ End Code
         @Model.ErrorMessage
     </span>
 End If
-    @<span>Activity Name</span>@<br />
-    @Html.TextBoxFor(Function(x) x.ActivityValues.First.ActivityName, New With {.readOnly = "readOnly", .class = "targetActivity", .id = "targetActivity"})
+    @<br/>
     @For Each activity In Model.ActivityValues
+        @<span>Activity Name</span>@<br />
+        @Html.TextBoxFor(Function(x) x.ActivityValues.Item(counter).ActivityName)
         @<br />@<br />
         @<span>Description (To create an activity that uses a checkbox entry style enter: CHECKBOX)</span>@<br />
             @Html.TextAreaFor(Function(x) x.ActivityValues.Item(counter).Description)
@@ -34,10 +35,3 @@ Next
 
     @<input type="submit" value="Submit" />
 End Using
-<script>
-    $("#actName").change(function () {
-        window.location.href = "/Forms/AtheleteLog?targetActivity=" + $("#actNam").val();
-    });
-
-</script>
-

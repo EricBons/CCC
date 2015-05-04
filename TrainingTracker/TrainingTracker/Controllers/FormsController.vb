@@ -60,17 +60,23 @@ Public Class FormsController
         Dim model As New CoachEditModel
         Dim ActNam = targetActivity
         Dim activities = db.Activities.Where(Function(x) x.ActivityName = ActNam).ToList()
-        For Each x In activities
-            Dim pair = activities.FirstOrDefault(Function(y) y.ActivityName = x.ActivityName)
-            Dim temp = Nothing
-            If pair IsNot Nothing Then
-                temp = New ActivityModel With {.ActivityName = x.ActivityName, .Description = x.Description, .IsNumber = x.isNumber, .Active = x.Active}
-            Else
-                temp = New ActivityModel With {.ActivityName = x.ActivityName, .Description = x.Description, .IsNumber = False, .Active = True}
-            End If
-
+        Dim temp = Nothing
+        If targetActivity = "" Then
+            temp = New ActivityModel With {.ActivityName = "", .Description = "", .IsNumber = False, .Active = True, .IsNew = True}
             model.ActivityValues.Add(temp)
-        Next
+        Else
+            For Each x In activities
+                Dim pair = activities.FirstOrDefault(Function(y) y.ActivityName = x.ActivityName)
+                temp = Nothing
+                If pair IsNot Nothing Then
+                    temp = New ActivityModel With {.ActivityName = x.ActivityName, .Description = x.Description, .IsNumber = x.isNumber, .Active = x.Active, .IsNew = False}
+                Else
+                    temp = New ActivityModel With {.ActivityName = x.ActivityName, .Description = x.Description, .IsNumber = False, .Active = True, .IsNew = True}
+                End If
+
+                model.ActivityValues.Add(temp)
+            Next
+        End If
         Return View(model)
     End Function
 
@@ -79,17 +85,80 @@ Public Class FormsController
         Dim model As New CoachEditModel
         Dim rounam = targetRoute
         Dim routes = db.Routes.Where(Function(x) x.RouteName = rounam).ToList()
-        For Each x In routes
-            Dim pair = routes.FirstOrDefault(Function(y) y.RouteName = x.RouteName)
-            Dim temp = Nothing
-            If pair IsNot Nothing Then
-                temp = New RouteModel With {.RouteName = x.RouteName, .Distance = x.Distance, .IsActive = x.IsActive}
-            Else
-                temp = New RouteModel With {.RouteName = x.RouteName, .Distance = x.Distance, .IsActive = True}
-            End If
-
+        Dim temp = Nothing
+        If targetRoute = "" Then
+            temp = New RouteModel With {.RouteName = "", .Distance = 0, .IsActive = True}
             model.RouteValues.Add(temp)
+        Else
+            For Each x In routes
+                Dim pair = routes.FirstOrDefault(Function(y) y.RouteName = x.RouteName)
+                temp = Nothing
+                If pair IsNot Nothing Then
+                    temp = New RouteModel With {.RouteName = x.RouteName, .Distance = x.Distance, .IsActive = x.IsActive, .IsNew = False}
+                Else
+                    temp = New RouteModel With {.RouteName = "", .Distance = 0, .IsActive = True, .IsNew = True}
+                End If
+                model.RouteValues.Add(temp)
+            Next
+        End If
+
+        Return View(model)
+    End Function
+
+    <HttpPost()> _
+    Function RouteChange(model As CoachEditModel) As ActionResult
+        Dim current_user As Person = currentUser()
+        Dim routes = db.Routes.ToList()
+        model.Routes = New SelectList(routes, "Distance", "RouteName")
+        For Each x In model.RouteValues
+            Dim existingData = db.Routes.Where(Function(y) y.RouteName = x.RouteName).FirstOrDefault()
+            If (x.RouteName = "") Then
+                Console.Write("Routes require names")
+            ElseIf (x.RouteName IsNot Nothing OrElse x.RouteName = "") And (x.IsNew = True) Then
+                Dim newRoute = db.Routes.Create()
+                newRoute.RouteName = x.RouteName
+                newRoute.Distance = x.Distance
+                newRoute.IsActive = x.IsActive
+                db.Routes.Add(newRoute)
+                db.SaveChanges()
+            ElseIf (x.RouteName IsNot Nothing OrElse x.RouteName = "") And (x.IsNew = False) Then
+                existingData.Distance = x.Distance
+                existingData.IsActive = x.IsActive
+                db.SaveChanges()
+            End If
         Next
+        Return RedirectToAction("CoachEdit", "Home")
+        Return View(model)
+    End Function
+
+    <HttpPost()> _
+    Function ActivityChange(model As CoachEditModel) As ActionResult
+        Dim current_user As Person = currentUser()
+        Dim activities = db.Activities.ToList()
+        model.Activities = New SelectList(activities, "Distance", "ActivityName")
+        For Each x In model.ActivityValues
+            Dim existingData = db.Activities.Where(Function(y) y.ActivityName = x.ActivityName).FirstOrDefault()
+            If (existingData Is Nothing) Then
+                x.IsNew = True
+            End If
+            If (x.ActivityName = "") Then
+                Console.Write("Routes require names")
+            ElseIf (x.ActivityName IsNot Nothing OrElse x.ActivityName = "") And (x.IsNew = True) Then
+                Dim newAct = db.Activities.Create()
+                newAct.ActivityName = x.ActivityName
+                newAct.Description = x.Description
+                newAct.isNumber = x.IsNumber
+                newAct.Active = x.Active
+                db.Activities.Add(newAct)
+                db.SaveChanges()
+            ElseIf (x.ActivityName IsNot Nothing OrElse x.ActivityName = "") And (x.IsNew = False) Then
+                existingData.Description = x.Description
+                existingData.isNumber = x.IsNumber
+                existingData.Active = x.Active
+                db.SaveChanges()
+            End If
+        Next
+        Return RedirectToAction("CoachEdit", "Home")
         Return View(model)
     End Function
 

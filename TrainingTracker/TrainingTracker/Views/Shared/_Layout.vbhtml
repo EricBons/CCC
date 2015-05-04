@@ -29,11 +29,7 @@
                             <li>@Html.ActionLink("Log Training", "AtheleteLog", "Forms")</li>
                             <li>@Html.ActionLink("Career Overview", "CareerOverview", "Home")</li>
                             <li>@Html.ActionLink("Weekly Overview", "WeeklyOverview", "Home")</li>
-                            <li>
-                              @*  @If currentUser().Admin Then *@
-                                    @Html.ActionLink("Coach Edit", "CoachEdit", "Home")
-                              @*  End If *@
-                            </li>
+                            <li>@Html.ActionLink("Coach Edit", "CoachEdit", "Home")</li>
                         </ul>
                     </nav>
                 </div>

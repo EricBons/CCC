@@ -10,10 +10,10 @@ End Code
 @Using (Html.BeginForm("Log Training"))
     Html.ValidationSummary(True, "Management Failed, fields.")
     If Model.SubmissionFailed Then
-    @<span style="color:red">
-        @Model.ErrorMessage
-    </span>
-End If
+        @<span style="color:red">
+            @Model.ErrorMessage
+        </span>
+    End If
 @<span>Date</span>@<br/>
 @Html.TextBoxFor(Function(x) x.Day, New With {.readOnly = "readOnly",.class="datepicker datefield",.id="dateOfTraining",.Value=Model.Day.ToShortDateString})
 @For Each activity In Model.ActivityValues

@@ -10,13 +10,14 @@ End Code
 @Using (Html.BeginForm("Route Change"))
     Html.ValidationSummary(True, "Management Failed, fields.")
     If Model.SubmissionFailed Then
-    @<span style="color:red">
-        @Model.ErrorMessage
-    </span>
-End If
-    @<span>Route Name</span>@<br />
-    @Html.TextBoxFor(Function(x) x.RouteValues.First.RouteName, New With {.readOnly = "readOnly", .class = "targetRoute", .id = "targetRoute"})
+        @<span style="color:red">
+            @Model.ErrorMessage
+        </span>
+    End If
+    @<br />
     @For Each route In Model.RouteValues
+        @<span>Route Name</span>@<br />
+        @Html.TextBoxFor(Function(x) x.RouteValues.Item(counter).RouteName)
         @<br />@<br />
         @<span>Distance</span>@<br />
             @Html.TextBoxFor(Function(x) x.RouteValues.Item(counter).Distance, New With {.type = "number"})
@@ -27,7 +28,5 @@ End If
         @<br />@<br />
         counter = counter + 1
     Next
-
     @<input type="submit" value="Submit" />
 End Using
-

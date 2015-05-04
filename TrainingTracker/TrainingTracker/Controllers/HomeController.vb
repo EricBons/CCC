@@ -13,7 +13,6 @@
 
     Function About() As ActionResult
         ViewData("Message") = "Additional Info"
-
         Return View()
     End Function
 
@@ -36,9 +35,7 @@
         If user.Admin Then
             Return View("CoachEdit")
         Else
-            Dim p = New StringBuilder
-            p.Append(<p>You are not authorized for this page</p>)
-            Return View(p)
+            Return View("UnAuth")
         End If
     End Function
 

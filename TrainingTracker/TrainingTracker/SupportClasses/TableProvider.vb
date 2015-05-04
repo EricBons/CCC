@@ -132,9 +132,11 @@
             table.rows.Add(New Row With {.values = New List(Of String) From {"", "", "", "", "<a href='/Forms/ActivityChange?targetActivity='>New Activity</a>"}})
             For Each activity In activities
                 If activity.Active = True Then
-                    act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='True'>"
+                    'act = "<input type='checkbox' name='ActAct' id='ActAct' Checked='True'>"
+                    act = "True"
                 Else
-                    act = "<input type='checkbox' name='ActAct' id='ActAct'>"
+                    'act = "<input type='checkbox' name='ActAct' id='ActAct'>"
+                    act = "False"
                 End If
                 Dim row = New Row With {.values = New List(Of String) From {act, activity.ActivityName, activity.Description, activity.isNumber, "<a href='/Forms/ActivityChange?targetActivity=" + activity.ActivityName + "'>Edit</a>"}}
                 table.rows.Add(row)
@@ -158,12 +160,14 @@
         If currentUser.Admin Then
             Dim routes = db.Routes.ToList()
             Dim act = ""
-            table.rows.Add(New Row With {.values = New List(Of String) From {"", "", "", "<a href='/Forms/RouteChange?targetRoute='>New Route</a>"}})
+            table.rows.Add(New Row With {.values = New List(Of String) From {" ", " ", " ", "<a href='/Forms/RouteChange?targetRoute='>New Route</a>"}})
             For Each route In routes
                 If route.IsActive = True Then
-                    act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='True'>"
+                    'act = "<input type='checkbox' name='RouAct' id='RouAct' Checked='True'>"
+                    act = "True"
                 Else
-                    act = "<input type='checkbox' name='RouAct' id='RouAct'>"
+                    act = "False"
+                    'act = "<input type='checkbox' name='RouAct' id='RouAct'>"
                 End If
                 Dim row = New Row With {.values = New List(Of String) From {act, route.RouteName, route.Distance, "<a href='/Forms/RouteChange?targetRoute=" + route.RouteName + "'>Edit</a>"}}
                 table.rows.Add(row)

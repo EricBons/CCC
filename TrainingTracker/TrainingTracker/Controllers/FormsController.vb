@@ -135,7 +135,7 @@ Public Class FormsController
     Function ActivityChange(model As CoachEditModel) As ActionResult
         Dim current_user As Person = currentUser()
         Dim activities = db.Activities.ToList()
-        model.Activities = New SelectList(activities, "Distance", "ActivityName")
+        model.Activities = New SelectList(activities, "Description", "ActivityName")
         For Each x In model.ActivityValues
             Dim existingData = db.Activities.Where(Function(y) y.ActivityName = x.ActivityName).FirstOrDefault()
             If (existingData Is Nothing) Then

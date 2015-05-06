@@ -180,7 +180,7 @@
           <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
-          <Property Name="Passwd" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passwd" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="PersonActivities" Relationship="Self.Email" FromRole="Person" ToRole="PersonActivity" />
           <NavigationProperty Name="Runnings" Relationship="Self.Running_ibfk_1" FromRole="Person" ToRole="Running" />
           <NavigationProperty Name="Feedbacks" Relationship="CCCDomainContext.Athelete" FromRole="Person" ToRole="Feedback" />
